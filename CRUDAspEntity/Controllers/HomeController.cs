@@ -62,6 +62,7 @@ namespace CRUDAspEntity.Controllers
                 studentData.LastName = personalInfo.LastName;
                 studentData.FirstName = personalInfo.FirstName;
                 studentData.Age = personalInfo.Age;
+                studentData.Grade = personalInfo.Grade;
 
                 _context.Entry(studentData).State = EntityState.Modified;
                 _context.SaveChanges();

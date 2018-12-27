@@ -21,6 +21,12 @@ $(document).on("hide.bs.modal", "#viewStudentInfoModal", function () {
     t.clear().draw();
 });
 
+$(document).on("hide.bs.modal", "#editStudentInfoModal", function () {
+    var t = $('#gradesTableEdit').DataTable();
+
+    t.clear().draw();
+});
+
 //DataTables Setup
 $(document).ready(function () {
     $('#gradesTable').DataTable({
@@ -34,17 +40,11 @@ $(document).ready(function () {
         "ordering": false,
         "info": false
     });
-});
 
-
-$(document).ready(function () {
-    var table = $('#gradesTable').DataTable();
-
-    $('#gradesTable tbody').on('click', '#removeBtn', function () {
-        table
-            .row($(this).parents('tr'))
-            .remove()
-            .draw();
+    $('#gradesTableEdit').DataTable({
+        "paging": false,
+        "ordering": false,
+        "info": false
     });
 });
 
@@ -71,8 +71,7 @@ $(document).ready(function () {
         else {
             t.row.add([
                 $('#subjectNameInsert').val(),
-                $('#gradeInsert').val(),
-                    "test"
+                $('#gradeInsert').val()
             ]).draw(false);
         }
     });
@@ -80,6 +79,12 @@ $(document).ready(function () {
 
 
 //Insert Data
+$(document).on("click", "#undoGrade", function () {
+    var table = $('#gradesTable').DataTable();
+
+    table.row((table.data().count() / 2) - 1).remove().draw();
+});
+
 $(document).on("click", "#insertButton", function () {
     $.ajax(
     {
@@ -158,6 +163,8 @@ $(document).on("click", ".editButton", function () {
 
     $("#btnUpdate").attr("data-edit-id", id);
 
+    var t = $('#gradesTableEdit').DataTable();
+    
     $.ajax({
         type: "GET",
         url: "/Home/Edit?Id="+ id,
@@ -166,9 +173,25 @@ $(document).on("click", ".editButton", function () {
             
             var studentDetails = JSON.parse(jsonStringified);
 
+            var gradesDetails = JSON.parse(studentDetails.Grade);
+
             $("#lastname").val(studentDetails.LastName);
             $("#firstname").val(studentDetails.FirstName);
             $("#age").val(studentDetails.Age);
+
+            var i;
+            var result = {};
+            for (i = 0; i < gradesDetails.length; i++) {
+                var objectInResponse = gradesDetails[i];
+                var subject = objectInResponse.Subject;
+                var grade = objectInResponse.Grade;
+                result[subject] = grade;
+
+                t.row.add([
+                    subject,
+                    grade
+                ]).draw(false);
+            }
         },
         error: function () {
             alert("Error while retrieving data of :" + id);
@@ -188,6 +211,7 @@ $(document).on("click", "#btnUpdate", function () {
                 LastName: $("#lastname").val(),
                 FirstName: $("#firstname").val(),
                 Age: $("#age").val(),
+                Grade: JSON.stringify(tableToJSON($("#gradesTableEdit"))),
                 __RequestVerificationToken: $("input[name='__RequestVerificationToken']", "#updateInfoForm").val(),
             },
             success: function (da) {
@@ -207,19 +231,19 @@ $(document).on("click", "#btnDelete", function () {
     var id = $(this).attr("data-id");
     var table = $("#studentList");
     var button = $(this);
-    $.ajax(
-    {
-        method: "POST", //HTTP POST Method
-        url: "/Home/Delete?Id=" + id,
-        success: function (da) {
-            if (confirm("Are you sure you want to delete?") == true) {
+    if (confirm("Are you sure you want to delete?") == true) {
+        $.ajax(
+        {
+            method: "POST", //HTTP POST Method
+            url: "/Home/Delete?Id=" + id,
+            success: function (da) {
                 redrawDt();
+            },
+            error: function (da) {
+                alert('Error encountered!');
             }
-        },
-        error: function (da) {
-            alert('Error encountered!');
-        }
-    });
+        });
+    }
 });
 
 
