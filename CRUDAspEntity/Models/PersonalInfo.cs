@@ -19,5 +19,8 @@ namespace CRUDAspEntity.Models
 
         [Required]
         public int Age { get; set; }
+
+        [Required]
+        public string Grade { get; set; }
     }
 }

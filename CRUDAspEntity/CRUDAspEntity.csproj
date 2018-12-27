@@ -167,6 +167,10 @@
     <Compile Include="Migrations\201812260154449_InitialMigration.Designer.cs">
       <DependentUpon>201812260154449_InitialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812270156189_AddGradeColumnIntoPersonalInfoEntity.cs" />
+    <Compile Include="Migrations\201812270156189_AddGradeColumnIntoPersonalInfoEntity.Designer.cs">
+      <DependentUpon>201812270156189_AddGradeColumnIntoPersonalInfoEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -243,6 +247,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201812260154449_InitialMigration.resx">
       <DependentUpon>201812260154449_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812270156189_AddGradeColumnIntoPersonalInfoEntity.resx">
+      <DependentUpon>201812270156189_AddGradeColumnIntoPersonalInfoEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

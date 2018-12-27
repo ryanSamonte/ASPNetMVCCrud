@@ -1,0 +1,239 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="container" style="margin-top: 50px;">
+    <div class="row mb-5">
+        <div class="col">
+            <input type='button' class='btn btn-primary createButton' data-toggle='modal' data-target='#insertStudentInfoModal' name='insertButton' id='btnInsert' value='Add New Student' style='width:40%;' />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="table-responsive">
+                <table id="studentList" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Last Name</th>
+                            <th>First Name</th>
+                            <th>Age</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+
+    <div class="modal fade" id="viewStudentInfoModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">View Student Info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/Home/Save" method="post" id="updateInfoForm">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="lastnameView">Last Name</label>
+                                        <input type="text" name="lastnameView" class="form-control" id="lastnameView" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="firstnameView">First Name</label>
+                                        <input type="text" name="firstnameView" class="form-control" id="firstnameView" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="ageView">Age</label>
+                                        <input type="number" name="ageView" class="form-control" id="ageView" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table id="gradesList" class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Subject</th>
+                                                    <th>Grade</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" id="btnUpdate" data-edit-id="">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editStudentInfoModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Student Info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/Home/Save" method="post" id="updateInfoForm">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="lastname">Last Name</label>
+                                        <input type="text" name="lastname" class="form-control" id="lastname" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="firstname">First Name</label>
+                                        <input type="text" name="firstname" class="form-control" id="firstname" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="age">Age</label>
+                                        <input type="number" name="age" class="form-control" id="age" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" id="btnUpdate" data-edit-id="">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="insertStudentInfoModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New Student Info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" id="newInfoForm">
+                        @Html.AntiForgeryToken()
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="lastnameInsert">Last Name</label>
+                                        <input type="text" name="lastnameInsert" class="form-control" id="lastnameInsert" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="firstnameInsert">First Name</label>
+                                        <input type="text" name="firstnameInsert" class="form-control" id="firstnameInsert" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="ageInsert">Age</label>
+                                        <input type="number" name="ageInsert" class="form-control" id="ageInsert" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="subjectNameInsert">Subject Name</label>
+                                        <input type="text" name="subjectNameInsert" class="form-control" id="subjectNameInsert" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="gradeInsert">Grade</label>
+                                        <input type="number" name="gradeInsert" class="form-control" id="gradeInsert" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="gradeInsert">Action</label>
+                                        <button type="button" class="btn btn-primary btn-sm btn-block" id="insertGrade">Add to the List</button>
+                                    </div>
+                                </div>
+
+                              
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="content table-responsive table-full-width">
+                                        <table class="table table-hover table-striped text-center" id="gradesTable">
+                                            <thead class="text-center">
+                                                <tr>
+                                                    <th class="text-center" style="font-size: 15px;">Subject</th>
+                                                    <th class="text-center" style="font-size: 15px;">Grade</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody style="font-size: 12px;"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button class="btn btn-success" id="insertButton">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
