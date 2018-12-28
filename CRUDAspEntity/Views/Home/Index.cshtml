@@ -42,13 +42,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="/Home/Save" method="post" id="updateInfoForm">
+                    <form action="/Home/Save" method="post" id="viewInfoForm">
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="lastnameView">Last Name</label>
-                                        <input type="text" name="lastnameView" class="form-control" id="lastnameView" />
+                                        <input type="text" name="lastnameView" class="form-control" id="lastnameView" readonly/>
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +57,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="firstnameView">First Name</label>
-                                        <input type="text" name="firstnameView" class="form-control" id="firstnameView" />
+                                        <input type="text" name="firstnameView" class="form-control" id="firstnameView" readonly/>
                                     </div>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="ageView">Age</label>
-                                        <input type="number" name="ageView" class="form-control" id="ageView" />
+                                        <input type="number" name="ageView" class="form-control" id="ageView" readonly/>
                                     </div>
                                 </div>
                             </div>
@@ -112,7 +112,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="lastname">Last Name</label>
-                                        <input type="text" name="lastname" class="form-control" id="lastname" />
+                                        <input type="text" name="lastname" class="form-control" id="lastname" required/>
                                     </div>
                                 </div>
                             </div>
@@ -121,7 +121,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="firstname">First Name</label>
-                                        <input type="text" name="firstname" class="form-control" id="firstname" />
+                                        <input type="text" name="firstname" class="form-control" id="firstname" required/>
                                     </div>
                                 </div>
                             </div>
@@ -130,7 +130,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="age">Age</label>
-                                        <input type="number" name="age" class="form-control" id="age" />
+                                        <input type="number" name="age" class="form-control" id="age" required/>
                                     </div>
                                 </div>
                             </div>

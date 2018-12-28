@@ -2,5 +2,11 @@
     margin-left: -22px;
 }
 
+.error{
+    color: red;
+    font-family: "Bahnschrift", sans-serif;
+    font-size: 12px;
+}
+
 
 

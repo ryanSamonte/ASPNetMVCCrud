@@ -1,5 +1,87 @@
 ﻿$(document).ready(function () {
     getList();
+
+    //validations
+    $("#newInfoForm").validate({
+        onkeyup: false,
+        onsubmit: false,
+        rules: {
+            lastnameInsert: {
+                required: true
+            },
+
+            firstnameInsert: {
+                required: true
+            },
+
+            ageInsert: {
+                required: true
+            }
+        },
+
+        messages: {
+            lastnameInsert: {
+                required: 'Lastname is required'
+            },
+            firstnameInsert: {
+                required: 'Firstname is required'
+            },
+            ageInsert: {
+                required: 'Age is required'
+            }
+        },
+
+        highlight: function (input) {
+            $(input).addClass('error');
+        },
+        unhighlight: function (input) {
+            $(input).removeClass('error');
+        },
+        errorPlacement: function (error, element) {
+            $(element).parents('.form-group').append(error);
+        }
+    });
+
+
+    $("#updateInfoForm").validate({
+        onkeyup: false,
+        onsubmit: false,
+        rules: {
+            lastname: {
+                required: true
+            },
+
+            firstname: {
+                required: true
+            },
+
+            age: {
+                required: true
+            }
+        },
+
+        messages: {
+            lastname: {
+                required: 'Lastname is required'
+            },
+            firstname: {
+                required: 'Firstname is required'
+            },
+            age: {
+                required: 'Age is required'
+            }
+        },
+
+        highlight: function (input) {
+            $(input).addClass('error');
+        },
+        unhighlight: function (input) {
+            $(input).removeClass('error');
+        },
+        errorPlacement: function (error, element) {
+            $(element).parents('.form-group').append(error);
+        }
+    });
 });
 
 //Modal Events
@@ -53,19 +135,6 @@ $(document).ready(function () {
 
     $('#insertGrade').on('click', function () {
         if ($('#subjectNameInsert').val() == "" && $('#gradeInsert').val() == "") {
-            //$.notify({
-            //    icon: "pe-7s-close-circle",
-            //    message: "Kindly fill-in the affected areas of the changes"
-
-            //}, {
-            //    type: 'danger',
-            //    timer: 4000,
-            //    placement: {
-            //        from: "bottom",
-            //        align: "right"
-            //    }
-            //});
-
             console.log("None");
         }
         else {
@@ -86,27 +155,30 @@ $(document).on("click", "#undoGrade", function () {
 });
 
 $(document).on("click", "#insertButton", function () {
-    $.ajax(
-    {
-        method: "POST", //HTTP POST Method
-        url: "/Home/Save",
-        data: {
-            LastName: $("#lastnameInsert").val(),
-            FirstName: $("#firstnameInsert").val(),
-            Age: $("#ageInsert").val(),
-            Grade: JSON.stringify(tableToJSON($("#gradesTable"))),
-            __RequestVerificationToken: $("input[name='__RequestVerificationToken']", "#newInfoForm").val(),
-        },
-        success: function (da) {
-            var table = $("#studentList").DataTable();
-            $("#insertStudentInfoModal .close").click();
-            table.destroy();
-            getList();
-        },
-        error: function (da) {
-            alert('Error encountered!');
-        }
-    });
+    if ($("#newInfoForm").valid()) {
+        $.ajax({
+            method: "POST", //HTTP POST Method
+            url: "/Home/Save",
+            data: {
+                LastName: $("#lastnameInsert").val(),
+                FirstName: $("#firstnameInsert").val(),
+                Age: $("#ageInsert").val(),
+                Grade: JSON.stringify(tableToJSON($("#gradesTable"))),
+                __RequestVerificationToken: $("input[name='__RequestVerificationToken']", "#newInfoForm").val(),
+            },
+            success: function (da) {
+                var table = $("#studentList").DataTable();
+                $("#insertStudentInfoModal .close").click();
+                table.destroy();
+                getList();
+            },
+            error: function (da) {
+                alert('Error encountered!');
+            }
+        });
+    }
+
+    return false;
 });
 
 
@@ -203,27 +275,31 @@ $(document).on("click", ".editButton", function () {
 $(document).on("click", "#btnUpdate", function () {
         var id = $(this).attr("data-edit-id");
 
-        $.ajax(
-        {
-            method: "POST", //HTTP POST Method
-            url: "/Home/Update?Id=" + id,
-            data: {
-                LastName: $("#lastname").val(),
-                FirstName: $("#firstname").val(),
-                Age: $("#age").val(),
-                Grade: JSON.stringify(tableToJSON($("#gradesTableEdit"))),
-                __RequestVerificationToken: $("input[name='__RequestVerificationToken']", "#updateInfoForm").val(),
-            },
-            success: function (da) {
-                var table = $("#studentList").DataTable();
-                $("#editStudentInfoModal .close").click();
-                table.destroy();
-                getList();
-            },
-            error: function (da) {
-                alert('Error encountered!');
-            }
-        });
+        if ($("#updateInfoForm").valid()) {
+            $.ajax({
+                method: "POST", //HTTP POST Method
+                url: "/Home/Update?Id=" + id,
+                data: {
+                    LastName: $("#lastname").val(),
+                    FirstName: $("#firstname").val(),
+                    Age: $("#age").val(),
+                    Grade: JSON.stringify(tableToJSON($("#gradesTableEdit"))),
+                    __RequestVerificationToken: $("input[name='__RequestVerificationToken']", "#updateInfoForm").val(),
+                },
+                success: function (da) {
+                    var table = $("#studentList").DataTable();
+                    $("#editStudentInfoModal .close").click();
+                    table.destroy();
+                    getList();
+                },
+                error: function (da) {
+                    alert('Error encountered!');
+                }
+           });
+        }
+
+        return false;
+
 });
 
 //Delete Data
